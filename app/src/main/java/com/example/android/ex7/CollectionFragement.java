@@ -16,21 +16,32 @@ import android.widget.TextView;
 
 public class CollectionFragement extends Fragment {
 
+
+    public static final String ARGS_TEXT = "args_text";
+
+    public static CollectionFragement newInstance(String someText) {
+        CollectionFragement collectionFragement = new CollectionFragement();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARGS_TEXT, someText);
+        collectionFragement.setArguments(bundle);
+        return collectionFragement;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //setup views
         View view = inflater.inflate(R.layout.fragement_collection, container, false);
         View layout = view.findViewById(R.id.fragment_collection_layout);
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragement_collection, container, false);
 
-
-       // TextView textView =  view.findViewById(R.id.fragment_collection_Pic);
         //content
         layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-
+        TextView textView =  view.findViewById(R.id.fragment_collection_Pic);
+        String someText = getArguments().getString(ARGS_TEXT);
+        textView.setText(someText);
         //insert image here
-        return rootView;
+
+        return view;
 
 
     }

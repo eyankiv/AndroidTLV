@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.ex7.MainActivity">
 
-    <FrameLayout
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/activity_main_fragment_pager">-->
+
+    <!--</FrameLayout>-->
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/activity_main_fragment_pager">
+        android:id="@+id/activity_main_fragment_pager"
 
-    </FrameLayout>
+        ></android.support.v4.view.ViewPager>
 
 
 </LinearLayout>
