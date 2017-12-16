@@ -1,6 +1,7 @@
 package com.example.android.ex7;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -35,11 +37,12 @@ public class CollectionFragement extends Fragment {
         View layout = view.findViewById(R.id.fragment_collection_layout);
 
         //content
-        layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        TextView textView =  view.findViewById(R.id.fragment_collection_Pic);
+        ImageView imageView =  view.findViewById(R.id.fragment_collection_Pic);
+        TextView collectionTitle = view.findViewById(R.id.fragment_collection_title);
         String someText = getArguments().getString(ARGS_TEXT);
-        textView.setText(someText);
-        //insert image here
+        //collectionTitle.setText(someText);
+        Resources res = getResources();
+        collectionTitle.setText("Collection: " +someText);
 
         return view;
 
