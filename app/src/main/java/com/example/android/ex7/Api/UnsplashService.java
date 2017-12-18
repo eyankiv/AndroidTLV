@@ -13,6 +13,8 @@ import retrofit2.http.Path;
  */
 
 public interface UnsplashService {
-    @GET ("/collections/curated/?client_id+")
+    String Application_ID = "9a550290e242b403c1ba7aba1965db32b93d5877054a0a5add86b0fdf2e8beb6";
+
+    @GET ("/collections/curated/?client_id=" + Application_ID)
     Call<List<Collection>> getFeaturedCollections();
 }

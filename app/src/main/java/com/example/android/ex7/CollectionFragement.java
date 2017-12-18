@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.ex7.Entities.Collection;
+import com.squareup.picasso.Picasso;
+
 /**
  * Created by eyankiv on 12-Dec-17.
  */
@@ -19,14 +22,28 @@ import android.widget.TextView;
 public class CollectionFragement extends Fragment {
 
 
-    public static final String ARGS_TEXT = "args_text";
+    public static final String ARGS_COLLECTION_ID = "args_collection_id";
 
-    public static CollectionFragement newInstance(String someText) {
+    private Collection collection;
+
+    public static CollectionFragement newInstance(int collectionId) {
         CollectionFragement collectionFragement = new CollectionFragement();
         Bundle bundle = new Bundle();
-        bundle.putString(ARGS_TEXT, someText);
+        bundle.putInt(ARGS_COLLECTION_ID, collectionId);
         collectionFragement.setArguments(bundle);
         return collectionFragement;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        int collectionId = getArguments().getInt(ARGS_COLLECTION_ID);
+        collection = CollectionsRepository.getInstance().getCollection(collectionId);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Nullable
@@ -37,12 +54,18 @@ public class CollectionFragement extends Fragment {
         View layout = view.findViewById(R.id.fragment_collection_layout);
 
         //content
-        ImageView imageView =  view.findViewById(R.id.fragment_collection_Pic);
+
         TextView collectionTitle = view.findViewById(R.id.fragment_collection_title);
-        String someText = getArguments().getString(ARGS_TEXT);
+        ImageView imageView =  view.findViewById(R.id.fragment_collection_Pic);
+        TextView collectionDescription = view.findViewById(R.id.fragment_collection_description);
+        Integer id = getArguments().getInt(ARGS_COLLECTION_ID);
         //collectionTitle.setText(someText);
-        Resources res = getResources();
-        collectionTitle.setText("Collection: " +someText);
+        collectionTitle.setText("Collection # " +id.toString());
+        //picasso here
+        String imageUrl = collection.getPreviewPhotos().get(0).getUrls().getSmall();
+        Picasso.with(getContext()).load(imageUrl).into(imageView);
+        collectionDescription.setText(CollectionsRepository.getInstance().getCollection(id).getDescription());
+
 
         return view;
 
