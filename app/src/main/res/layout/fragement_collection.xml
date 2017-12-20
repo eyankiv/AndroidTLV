@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,50 +8,85 @@
     android:id="@+id/fragment_collection_layout"
     android:background="#020202">
 
-    <TextView
-        android:id="@+id/fragment_collection_title"
-        android:layout_width="216dp"
-        android:layout_height="33dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_collection_Pic"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:text="Collection+'number' " />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_collection_preview_layout"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/fragment_collection_title"
+            android:layout_width="216dp"
+            android:layout_height="33dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            tools:text="Collection+'number' " />
 
-    <ImageView
-        android:id="@+id/fragment_collection_Pic"
-        android:layout_width="293dp"
-        android:layout_height="278dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        <ImageView
+            android:id="@+id/fragment_collection_Pic"
+            android:layout_width="293dp"
+            android:layout_height="278dp"
+            android:layout_below="@+id/fragment_collection_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
 
-    <TextView
-        android:id="@+id/fragment_collection_description"
-        android:layout_width="275dp"
-        android:layout_height="103dp"
-        android:layout_marginTop="392dp"
-        android:textColor="#ffffff"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Here will go the general description of the collection which we will get from the unsplash api" />
+        <TextView
+            android:id="@+id/fragment_collection_preview_description"
+            android:layout_width="275dp"
+            android:layout_height="103dp"
+            android:layout_below="@+id/fragment_collection_Pic"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="27dp"
 
-</android.support.constraint.ConstraintLayout>
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            tools:text="Here will go the general description of the collection which we will get from the unsplash api" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_collection_details_layout"
+        >
+        <Button
+            android:id="@+id/Btn_close_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:background="@android:color/transparent"
+            android:textSize="25sp"
+            tools:text="X"
+            android:fontFamily="casual"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_recyclerView_collection_Pic"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@+id/Btn_close_details"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/Btn_open_collection_web_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_recyclerView_collection_Pic"
+            android:text="Visit Collection"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="27dp"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:tag="BtnViewLink"
+            />
+    </RelativeLayout>
+
+</FrameLayout>
