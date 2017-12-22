@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fragment_collection_preview_layout"
-        android:visibility="gone">
+        >
         <TextView
             android:id="@+id/fragment_collection_title"
             android:layout_width="216dp"
@@ -61,16 +61,17 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:textColor="#ffffff"
-            android:background="@android:color/transparent"
             android:textSize="25sp"
-            tools:text="X"
-            android:fontFamily="casual"/>
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"
+            android:text="X"
+
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/fragment_recyclerView_collection_Pic"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
             android:layout_below="@+id/Btn_close_details"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp" />
@@ -85,7 +86,6 @@
             android:layout_marginTop="27dp"
             android:textAlignment="center"
             android:textColor="#ffffff"
-            android:tag="BtnViewLink"
             />
     </RelativeLayout>
 

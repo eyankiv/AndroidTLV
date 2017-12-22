@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,8 @@ public class CollectionFragement extends Fragment implements View.OnClickListene
     private RecyclerView recyclerView;
     private Button btnViewWebCollections;
 
+    private CollectionFragmentListener mListener;
+
 
 
     public static CollectionFragement newInstance(int collectionId) {
@@ -56,11 +59,16 @@ public class CollectionFragement extends Fragment implements View.OnClickListene
         super.onCreate(savedInstanceState);
         int collectionId = getArguments().getInt(ARGS_COLLECTION_ID);
         collection = CollectionsRepository.getInstance().getCollection(collectionId);
+
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof CollectionFragmentListener) {
+            mListener = (CollectionFragmentListener) context;
+        }
+
     }
 
     @Nullable
@@ -70,24 +78,30 @@ public class CollectionFragement extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragement_collection, container, false);
         View layout = view.findViewById(R.id.fragment_collection_layout);
         Integer id = getArguments().getInt(ARGS_COLLECTION_ID);
+        previewLayout = view.findViewById(R.id.fragment_collection_preview_layout);
+        detailsLayout = view.findViewById(R.id.fragment_collection_details_layout);
 
         //preview layout
         collectionTitle = view.findViewById(R.id.fragment_collection_title);
         imageView =  view.findViewById(R.id.fragment_collection_Pic);
-        collectionDescription = view.findViewById(R.id.fragment_collection_description);
+        collectionDescription = view.findViewById(R.id.fragment_collection_preview_description);
         collectionTitle.setText("Collection # " +id.toString());
         //details layout
-        btnCloseDetails = view.findViewById(R.id.Btn_close_details);
         recyclerView = view.findViewById(R.id.fragment_recyclerView_collection_Pic);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+        btnCloseDetails = view.findViewById(R.id.Btn_close_details);
         btnViewWebCollections = view.findViewById(R.id.Btn_open_collection_web_link);
 
+        btnCloseDetails.setOnClickListener(this);
+        btnViewWebCollections.setOnClickListener(this);
+        previewLayout.setOnClickListener(this);
 
 
         //collectionTitle.setText(someText);
 
         //picasso here
-        String imageUrl = collection.getPreviewPhotos().get(0).getUrls().getSmall();
-        Picasso.with(getContext()).load(imageUrl).into(imageView);
+
         collectionDescription.setText(CollectionsRepository.getInstance().getCollection(id).getDescription());
 
 
@@ -96,11 +110,23 @@ public class CollectionFragement extends Fragment implements View.OnClickListene
     }
 
     private void showDetailsLayout(){
-
+        previewLayout.setVisibility(View.GONE);
+        detailsLayout.setVisibility(View.VISIBLE);
+        PhotoListAdapter adapter = new PhotoListAdapter(Picasso.with(getContext()), collection.getPreviewPhotos());
+        recyclerView.setAdapter(adapter);
     }
 
     private void showPreviewLayout(){
+        detailsLayout.setVisibility(View.GONE);
+        previewLayout.setVisibility(View.VISIBLE);
+        String imageUrl = collection.getPreviewPhotos().get(0).getUrls().getSmall();
+        Picasso.with(getContext()).load(imageUrl).into(imageView);
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        showPreviewLayout();
     }
 
     @Override
@@ -113,7 +139,9 @@ public class CollectionFragement extends Fragment implements View.OnClickListene
                 showPreviewLayout();
                 break;
             case R.id.Btn_open_collection_web_link:
-                //listener to show collection
+                if (mListener != null) {
+                    mListener.onCollectedSelected(collection);
+                }
                 break;
 
         }

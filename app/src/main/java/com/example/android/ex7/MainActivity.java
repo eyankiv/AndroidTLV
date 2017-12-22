@@ -1,5 +1,7 @@
 package com.example.android.ex7;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CollectionFragement.CollectionFragmentListener{
 
     public static final String MAIN_FRAGMENT = "Main Fragment";
     private static final String TAG = "response_body";
@@ -92,5 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void showErrorMessage(String errorMessage){
         Toast.makeText(this, "Something went wrong: "+errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCollectedSelected(Collection collection) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(collection.getLinks().getHtml()));
+        startActivity(browserIntent);
     }
 }
